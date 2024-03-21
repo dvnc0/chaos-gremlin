@@ -1,0 +1,7 @@
+src/vendor
+.gitconfig
+.vscode
+.phpunit.cache
+src/tests/coverage
+.ignore/
+test.php
