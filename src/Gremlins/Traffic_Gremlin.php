@@ -12,7 +12,7 @@ class Traffic_Gremlin extends Gremlin {
 	 */
 	public function attack(): void {
 		$this->sendGremlins();
-		exit();
+		return;
 	}
 
 	/**
@@ -28,12 +28,16 @@ class Traffic_Gremlin extends Gremlin {
 				// Fork failed
 				exit("Error forking process\n");
 			} elseif ($pid) {
-
+				$this->writeToLog('Traffic Gremlin is attacking the system');
+				continue;
 			} else {
 				$this->sendHttpRequest($this->settings['traffic_url']);
-				exit();
+				$this->writeToLog('Traffic Gremlin is attacking the system, request '. $i . ' sent.');
+				exit;
 			}
 		}
+
+		return;
 	}
 
 	/**

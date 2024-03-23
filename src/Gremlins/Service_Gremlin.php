@@ -27,5 +27,7 @@ class Service_Gremlin extends Gremlin {
 	public function attack(): void {
 		$service = $this->services[array_rand($this->services)];
 		exec("systemctl restart $service");
+		$this->writeToLog('Service Gremlin is attacking the system, restarting ' . $service);
+		return;
 	}
 }

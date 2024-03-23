@@ -13,6 +13,26 @@ class Memory_Gremlin extends Gremlin {
 	 * @return void
 	 */
 	public function attack(): void {
+		
+		$pid = pcntl_fork();
+		if ($pid === -1) {
+			die('Could not fork');
+		} elseif ($pid) {
+			$this->writeToLog('Memory Gremlin is attacking the system.');
+			return;
+		} else {
+			$this->writeToLog('Memory Gremlin is using PID: ' . getmypid() . ' to attack the system.');
+			$this->consumeMemory();
+			exit;
+		}
+	}
+
+	/**
+	 * Consume memory until the percent set in settings
+	 *
+	 * @return void
+	 */
+	protected function consumeMemory(): void {
 		$max_memory_percent = $this->settings['max_memory_percent'];
 		$memory_limit = $this->getMemoryLimit();
 		$memory_usage = memory_get_usage(true);
@@ -25,7 +45,6 @@ class Memory_Gremlin extends Gremlin {
 				$used_percent = ($memory_usage / $memory_limit) * 100;
 			}
 		}
-
 	}
 
 	/**

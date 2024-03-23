@@ -32,6 +32,7 @@ class Chaos_Gremlin {
 		'disk_gremlin_file_size' => 5 * 1024 * 1024,
 		'traffic_requests' => 100,
 		'traffic_url' => 'http://localhost:8080',
+		'log_directory' => './chaos_gremlin_logs',
 	];
 
 	/**
@@ -62,6 +63,10 @@ class Chaos_Gremlin {
 			'Traffic_Gremlin' => Traffic_Gremlin::class,
 			'Service_Gremlin' => Service_Gremlin::class,
 		];
+
+		if (!is_dir($this->settings['log_directory'])) {
+			mkdir($this->settings['log_directory'], 0777, true);
+		}
 	}
 
 	/**
@@ -93,9 +98,10 @@ class Chaos_Gremlin {
 	 * @return void
 	 */
 	public function enableGremlin(string $gremlin_key): void {
-		if (!\array_key_exists($gremlin_key, $this->gremlins)) {
+		if (!array_key_exists($gremlin_key, $this->gremlins)) {
 			throw new ChaosGremlinInstanceException('Gremlin not found!');
 		}
+		$this->writeToLog('Enabled Gremlin: ' . $gremlin_key);
 		$this->enabled_gremlins[] = $this->gremlins[$gremlin_key];
 	}
 
@@ -109,6 +115,7 @@ class Chaos_Gremlin {
 	public function enableCustomGremlin(string $gremlin_key, Gremlin $Gremlin_Instance): void {
 		$Gremlin_Instance->settings = $this->settings;
 		$this->custom_gremlins[$gremlin_key] = $Gremlin_Instance;
+		$this->writeToLog('Enabled Custom Gremlin: ' . $gremlin_key);
 	}
 
 	/**
@@ -118,10 +125,11 @@ class Chaos_Gremlin {
 	 * @return void
 	 */
 	public function callGremlin(string $gremlin_key): void {
-		if (!\array_key_exists($gremlin_key, $this->custom_gremlins)) {
+		if (!array_key_exists($gremlin_key, $this->custom_gremlins)) {
 			throw new ChaosGremlinInstanceException('Gremlin not found!');
 		}
 		$this->custom_gremlins[$gremlin_key]->attack();
+		$this->writeToLog('Called Custom Gremlin: ' . $gremlin_key);
 	}
 
 	/**
@@ -134,6 +142,7 @@ class Chaos_Gremlin {
 			$gremlin = $this->enabled_gremlins[array_rand($this->enabled_gremlins)];
 			$Gremlin_Instance = new $gremlin();
 			$Gremlin_Instance->settings = $this->settings;
+			$this->writeToLog('Released Gremlin: ' . $gremlin);
 			$Gremlin_Instance->attack();
 		}
 	}
@@ -145,5 +154,17 @@ class Chaos_Gremlin {
 	 */
 	protected function shouldUseGremlin(): bool {
 		return (rand(1, 100) <= $this->settings['probability']);
+	}
+
+	/**
+	 * Write to the log file
+	 *
+	 * @param string $message
+	 * @return void
+	 */
+	protected function writeToLog(string $message): void {
+		$log_file = $this->settings['log_directory'] . '/chaos_gremlin.log';
+		$log_message = date('Y-m-d H:i:s') . ' - ' . $message . PHP_EOL;
+		file_put_contents($log_file, $log_message, FILE_APPEND);
 	}
 }

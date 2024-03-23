@@ -16,6 +16,15 @@ abstract class Gremlin {
 	}
 
 	/**
+	 * Get a random dice roll
+	 *
+	 * @return int
+	 */
+	protected function getDiceRoll(): int {
+		return rand(1, 6);
+	}
+
+	/**
 	 * Check the probability of the gremlin attacking
 	 *
 	 * @return bool
@@ -24,5 +33,22 @@ abstract class Gremlin {
 		return (rand(1, 100) <= $this->settings['probability']);
 	}
 
+	/**
+	 * Write to the log file
+	 *
+	 * @param string $message
+	 * @return void
+	 */
+	protected function writeToLog(string $message): void {
+		$log_file = $this->settings['log_directory'] . '/chaos_gremlin.log';
+		$log_message = date('Y-m-d H:i:s') . ' - ' . $message . PHP_EOL;
+		file_put_contents($log_file, $log_message, FILE_APPEND);
+	}
+
+	/**
+	 * Attack the system
+	 *
+	 * @return void
+	 */
 	abstract public function attack(): void;
 }

@@ -15,6 +15,7 @@ class Disk_Gremlin extends Gremlin {
 		if ($pid === -1) {
 			die('could not fork');
 		} else if ($pid) {
+			$this->writeToLog('Disk Gremlin is attacking the system');
 			return;
 		} else {
 			if (!is_dir($this->settings['disk_gremlin_directory'])) {

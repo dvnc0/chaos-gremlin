@@ -1,0 +1,59 @@
+2024-03-23 04:39:43 - Enabled Gremlin: Cpu_Gremlin
+2024-03-23 04:39:43 - Released Gremlin: ChaosGremlin\Gremlins\Cpu_Gremlin
+2024-03-23 04:41:10 - Enabled Gremlin: Cpu_Gremlin
+2024-03-23 04:41:10 - Released Gremlin: ChaosGremlin\Gremlins\Cpu_Gremlin
+2024-03-23 04:42:07 - Enabled Gremlin: Cpu_Gremlin
+2024-03-23 04:42:08 - Released Gremlin: ChaosGremlin\Gremlins\Cpu_Gremlin
+2024-03-23 04:43:59 - Enabled Gremlin: Disk_Gremlin
+2024-03-23 04:43:59 - Released Gremlin: ChaosGremlin\Gremlins\Disk_Gremlin
+2024-03-23 04:47:32 - Enabled Gremlin: Traffic_Gremlin
+2024-03-23 04:47:32 - Traffic Gremlin is attacking the system
+2024-03-23 04:48:14 - Enabled Gremlin: Traffic_Gremlin
+2024-03-23 04:48:14 - Traffic Gremlin is attacking the system
+2024-03-23 04:48:14 - Released Gremlin: ChaosGremlin\Gremlins\Traffic_Gremlin
+2024-03-23 04:49:21 - Enabled Gremlin: Traffic_Gremlin
+2024-03-23 04:49:21 - Traffic Gremlin is attacking the system
+2024-03-23 04:49:21 - Released Gremlin: ChaosGremlin\Gremlins\Traffic_Gremlin
+2024-03-23 04:49:21 - Traffic Gremlin is attacking the system, request0 sent.
+2024-03-23 04:49:47 - Enabled Gremlin: Traffic_Gremlin
+2024-03-23 04:49:47 - Traffic Gremlin is attacking the system
+2024-03-23 04:49:47 - Released Gremlin: ChaosGremlin\Gremlins\Traffic_Gremlin
+2024-03-23 04:49:47 - Traffic Gremlin is attacking the system, request 0 sent.
+2024-03-23 04:49:47 - Released Gremlin: ChaosGremlin\Gremlins\Traffic_Gremlin
+2024-03-23 04:50:38 - Enabled Gremlin: Traffic_Gremlin
+2024-03-23 04:50:38 - Traffic Gremlin is attacking the system
+2024-03-23 04:50:38 - Traffic Gremlin is attacking the system, request 0 sent.
+2024-03-23 04:51:40 - Enabled Gremlin: Traffic_Gremlin
+2024-03-23 04:51:40 - Traffic Gremlin is attacking the system
+2024-03-23 04:51:40 - Traffic Gremlin is attacking the system, request 0 sent.
+2024-03-23 04:51:40 - Traffic Gremlin is attacking the system
+2024-03-23 04:51:40 - Traffic Gremlin is attacking the system, request 1 sent.
+2024-03-23 04:51:40 - Traffic Gremlin is attacking the system
+2024-03-23 04:51:40 - Traffic Gremlin is attacking the system, request 2 sent.
+2024-03-23 04:51:40 - Traffic Gremlin is attacking the system
+2024-03-23 04:51:40 - Traffic Gremlin is attacking the system, request 3 sent.
+2024-03-23 04:51:40 - Traffic Gremlin is attacking the system
+2024-03-23 04:51:40 - Traffic Gremlin is attacking the system, request 4 sent.
+2024-03-23 04:51:40 - Traffic Gremlin is attacking the system
+2024-03-23 04:51:40 - Traffic Gremlin is attacking the system, request 5 sent.
+2024-03-23 04:51:40 - Traffic Gremlin is attacking the system
+2024-03-23 04:51:40 - Traffic Gremlin is attacking the system, request 6 sent.
+2024-03-23 04:51:40 - Traffic Gremlin is attacking the system
+2024-03-23 04:51:40 - Traffic Gremlin is attacking the system, request 7 sent.
+2024-03-23 04:51:40 - Traffic Gremlin is attacking the system
+2024-03-23 04:51:40 - Traffic Gremlin is attacking the system, request 8 sent.
+2024-03-23 04:51:40 - Traffic Gremlin is attacking the system
+2024-03-23 04:51:40 - Released Gremlin: ChaosGremlin\Gremlins\Traffic_Gremlin
+2024-03-23 04:51:40 - Traffic Gremlin is attacking the system, request 9 sent.
+2024-03-23 04:53:45 - Enabled Gremlin: Memory_Gremlin
+2024-03-23 04:53:45 - Released Gremlin: ChaosGremlin\Gremlins\Memory_Gremlin
+2024-03-23 04:55:30 - Enabled Gremlin: Memory_Gremlin
+2024-03-23 04:55:30 - Released Gremlin: ChaosGremlin\Gremlins\Memory_Gremlin
+2024-03-23 04:55:30 - Memory Gremlin is attacking the system. PID: 0
+2024-03-23 04:57:18 - Enabled Gremlin: Memory_Gremlin
+2024-03-23 04:57:18 - Released Gremlin: ChaosGremlin\Gremlins\Memory_Gremlin
+2024-03-23 04:57:18 - Memory Gremlin is attacking the system.
+2024-03-23 04:58:26 - Enabled Gremlin: Memory_Gremlin
+2024-03-23 04:58:26 - Released Gremlin: ChaosGremlin\Gremlins\Memory_Gremlin
+2024-03-23 04:58:26 - Memory Gremlin is attacking the system.
+2024-03-23 04:58:26 - Memory Gremlin is using PID: 35891 to attack the system.
