@@ -16,6 +16,8 @@ Chaos Gremlin is a PHP chaos testing tool, it introduces random problems into yo
 
 **THIS IS INTENDED FOR TESTING YOUR OWN APPLICATIONS OR APPLICATIONS YOU HAVE PERMISSION TO TEST**
 
+Install with: `composer require dvnc0/chaos-gremlin`
+
 ## Default Settings
 ```php
 protected array $settings = [
