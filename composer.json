@@ -1,6 +1,5 @@
 {    
     "name": "dvnc0/chaos-gremlin",
-    "version": "0.0.0",
     "type": "library",
     "description": "A chaos agent for PHP",
     "authors": [
