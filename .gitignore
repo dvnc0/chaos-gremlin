@@ -5,3 +5,5 @@ src/vendor
 src/tests/coverage
 .ignore/
 test.php
+chaos_gremlin_logs/
+chaos_gremlin/

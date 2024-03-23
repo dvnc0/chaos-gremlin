@@ -86,7 +86,7 @@ There are a number of Gremlins available to use in Chaos Gremlin. You can enable
 |Cpu_Gremlin |Consumes CPU |
 |Black_Hole_Gremlin |Writes a random amount of data to /dev/null |
 |Die_Gremlin |Calls PHPs `die` function |
-|Service_Gremlin |Restarts a random service |
+|Service_Gremlin |Restarts a random service, will not work without sudo privileges |
 
 ## Adding custom settings
 ```php

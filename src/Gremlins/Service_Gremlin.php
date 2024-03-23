@@ -16,7 +16,7 @@ class Service_Gremlin extends Gremlin {
 		'mysql',
 		'postgresql',
 		'php-fpm',
-		'mariadb',
+		'mariadb.service',
 	];
 
 	/**
@@ -25,9 +25,24 @@ class Service_Gremlin extends Gremlin {
 	 * @return void
 	 */
 	public function attack(): void {
+		$pid = pcntl_fork();
+		if ($pid === -1) {
+			$this->writeToLog('Service Gremlin failed to fork');
+			return;
+		} elseif ($pid) {
+			$this->writeToLog('Service Gremlin is attacking the system.');
+			return;
+		} else {
+			$this->restartService();
+			exit;
+		}
+	}
+
+	protected function restartService(): void {
 		$service = $this->services[array_rand($this->services)];
-		exec("systemctl restart $service");
-		$this->writeToLog('Service Gremlin is attacking the system, restarting ' . $service);
+		$this->writeToLog('Service Gremlin is restarting ' . $service);
+		
+		shell_exec('sudo systemctl restart ' . $service);
 		return;
 	}
 }
