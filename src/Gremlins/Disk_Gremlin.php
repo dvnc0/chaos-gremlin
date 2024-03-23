@@ -6,7 +6,7 @@ namespace ChaosGremlin\Gremlins;
 class Disk_Gremlin extends Gremlin {
 
 	/**
-	 * Attack the system by writing a random amount of data to /dev/null
+	 * Attack the system by writing a random amount of data to disk
 	 *
 	 * @return void
 	 */
