@@ -33,6 +33,7 @@ class Chaos_Gremlin {
 		'traffic_requests' => 100,
 		'traffic_url' => 'http://localhost:8080',
 		'log_directory' => './chaos_gremlin_logs',
+		'traffic_gremlin_spawns_gremlins' => false,
 	];
 
 	/**
@@ -128,6 +129,12 @@ class Chaos_Gremlin {
 		if (!array_key_exists($gremlin_key, $this->custom_gremlins)) {
 			throw new ChaosGremlinInstanceException('Gremlin not found!');
 		}
+
+		if (isset($_SERVER['HTTP_CHAOS_GREMLIN_DISABLE'])) {
+			$this->writeToLog('Chaos Gremlin is disabled with HTTP_CHAOS_GREMLIN_DISABLE header');
+			return;
+		}
+
 		$this->custom_gremlins[$gremlin_key]->attack();
 		$this->writeToLog('Called Custom Gremlin: ' . $gremlin_key);
 	}
@@ -138,6 +145,12 @@ class Chaos_Gremlin {
 	 * @return void
 	 */
 	public function release(): void {
+
+		if (isset($_SERVER['HTTP_CHAOS_GREMLIN_DISABLE'])) {
+			$this->writeToLog('Chaos Gremlin is disabled with HTTP_CHAOS_GREMLIN_DISABLE header');
+			return;
+		}
+
 		if ($this->shouldUseGremlin()) {
 			$gremlin = $this->enabled_gremlins[array_rand($this->enabled_gremlins)];
 			$Gremlin_Instance = new $gremlin();

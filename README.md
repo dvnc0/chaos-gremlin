@@ -33,6 +33,7 @@ protected array $settings = [
 	'traffic_requests' => 100,
 	'traffic_url' => 'http://localhost:8080',
 	'log_directory' => './chaos_gremlin_logs',
+	'traffic_gremlin_spawns_gremlins' => false,
 ];
 ```
 
@@ -52,6 +53,7 @@ These are the default settings for Chaos Gremlin and can be changed by using the
 |traffic_requests| The number of requests the Traffic_Gremlin will make|
 |traffic_url| The URL the Traffic_Gremlin will make requests to|
 |log_directory| The directory that the logs will be saved to|
+|traffic_gremlin_spawns_gremlins| If the Traffic_Gremlin should spawn other Gremlins, this can get out of hand quick|
 
 ## Using Chaos Gremlin
 
@@ -87,6 +89,9 @@ There are a number of Gremlins available to use in Chaos Gremlin. You can enable
 |Black_Hole_Gremlin |Writes a random amount of data to /dev/null |
 |Die_Gremlin |Calls PHPs `die` function |
 |Service_Gremlin |Restarts a random service, will not work without sudo privileges |
+
+#### Traffic Gremlin
+The Traffic Gremlin will make requests to the URL set in the settings array. This can be used to test how your application handles a large number of requests. By default requests from the Traffic Gremlin will not spawn other Gremlins, this can be changed by setting the `traffic_gremlin_spawns_gremlins` setting to `true`. Again, be cautious with this setting as it can spawn a large number of Gremlins depending on your settings, including more Traffic Gremlins which could create additional Gremlins etc, etc.
 
 ## Adding custom settings
 ```php

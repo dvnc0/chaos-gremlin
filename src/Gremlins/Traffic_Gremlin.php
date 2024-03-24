@@ -50,6 +50,11 @@ class Traffic_Gremlin extends Gremlin {
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		if ($this->settings['traffic_gremlin_spawns_gremlins'] === false) {
+			curl_setopt($ch, CURLOPT_HTTPHEADER, ['CHAOS_GREMLIN_DISABLE: true']);
+		}
+
 		curl_close($ch);
 		return;
 	}

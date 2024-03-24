@@ -49,9 +49,10 @@ class Disk_Gremlin extends Gremlin {
 	 * @return void
 	 */
 	function writeDataToDisk(string $directory, int $num_files, int $file_size) {
+		$run_hash = md5(uniqid());
 		for ($i = 0; $i < $num_files; $i++) {
 			$data = $this->generateRandomData($file_size);
-			$filename = $directory . '/file_' . $i . '.txt';
+			$filename = $directory . '/file_' . $i . '_' . $run_hash . '.txt';
 			file_put_contents($filename, $data);
 		}
 	}
