@@ -13,8 +13,17 @@ class Memory_Gremlin extends Gremlin {
 	 * @return void
 	 */
 	public function attack(): void {
-		
-		$pid = pcntl_fork();
+		$this->eatMemory();
+		return;
+	}
+
+	/**
+	 * Eat memory until the percent set in settings
+	 *
+	 * @return void
+	 */
+	protected function eatMemory(): void {
+		$pid = $this->getFork();
 		if ($pid === -1) {
 			die('Could not fork');
 		} elseif ($pid) {
@@ -34,15 +43,15 @@ class Memory_Gremlin extends Gremlin {
 	 */
 	protected function consumeMemory(): void {
 		$max_memory_percent = $this->settings['max_memory_percent'];
-		$memory_limit = $this->getMemoryLimit();
-		$memory_usage = memory_get_usage(true);
-		$used_percent = ($memory_usage / $memory_limit) * 100;
+		$memory_limit       = $this->getMemoryLimit();
+		$memory_usage       = memory_get_usage(TRUE);
+		$used_percent       = ($memory_usage / $memory_limit) * 100;
 
 		if ($used_percent < $max_memory_percent) {
 			while($used_percent < $max_memory_percent) {
 				$this->memory_store[] = $this->getDataChunk();
-				$memory_usage = memory_get_usage(true);
-				$used_percent = ($memory_usage / $memory_limit) * 100;
+				$memory_usage         = memory_get_usage(TRUE);
+				$used_percent         = ($memory_usage / $memory_limit) * 100;
 			}
 		}
 	}
@@ -50,7 +59,7 @@ class Memory_Gremlin extends Gremlin {
 	/**
 	 * Get a chunk of data, default to 1 mb
 	 *
-	 * @param integer $size
+	 * @param integer $size size of data chunk
 	 * @return array
 	 */
 	protected function getDataChunk(int $size = 1): array {
@@ -71,14 +80,17 @@ class Memory_Gremlin extends Gremlin {
 		}
 
 		$memory_limit = trim($memory_limit);
-		$last = strtolower($memory_limit[strlen($memory_limit) - 1]);
+		$last         = strtolower($memory_limit[strlen($memory_limit) - 1]);
 		$memory_limit = (int) $memory_limit;
 		
+		// Using fall-through to convert memory limit to bytes
 		switch ($last) {
 			case 'g':
 				$memory_limit *= 1024;
+			// fall-through
 			case 'm':
 				$memory_limit *= 1024;
+			// fall-through
 			case 'k':
 				$memory_limit *= 1024;
 		}

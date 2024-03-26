@@ -18,6 +18,12 @@ Chaos Gremlin is a PHP chaos testing tool, it introduces random problems into yo
 
 Install with: `composer require dvnc0/chaos-gremlin`
 
+## Requirements
+
+- PHP `pcntl` extension must be installed.
+- The log directory must be writable by the PHP process.
+- The Disk Gremlin directory must be writable by the PHP process.
+
 ## Default Settings
 ```php
 protected array $settings = [
@@ -27,12 +33,12 @@ protected array $settings = [
 	'exception_message' => 'Chaos Gremlin Exception',
 	'dice_roll_over_under' => 3.5,
 	'max_memory_percent' => 90,
-	'disk_gremlin_directory' => './chaos_gremlin',
+	'disk_gremlin_directory' => '',
 	'disk_gremlin_number_files' => 100,
 	'disk_gremlin_file_size' => 5 * 1024 * 1024,
 	'traffic_requests' => 100,
 	'traffic_url' => 'http://localhost:8080',
-	'log_directory' => './chaos_gremlin_logs',
+	'log_directory' => '',
 	'traffic_gremlin_spawns_gremlins' => false,
 ];
 ```
@@ -47,12 +53,12 @@ These are the default settings for Chaos Gremlin and can be changed by using the
 |exception_message| The message that will be thrown with the Exception_Gremlin|
 |dice_roll_over_under| The number that the dice will roll over or under to release a Gremlin|
 |max_memory_percent| The maximum memory percentage that the Memory_Gremlin will use|
-|disk_gremlin_directory| The directory that the Disk_Gremlin will create files in|
+|disk_gremlin_directory REQUIRED| The directory that the Disk_Gremlin will create files in|
 |disk_gremlin_number_files| The number of files the Disk_Gremlin will create|
 |disk_gremlin_file_size| The size of the files the Disk_Gremlin will create|
 |traffic_requests| The number of requests the Traffic_Gremlin will make|
 |traffic_url| The URL the Traffic_Gremlin will make requests to|
-|log_directory| The directory that the logs will be saved to|
+|log_directory REQUIRED| The directory that the logs will be saved to|
 |traffic_gremlin_spawns_gremlins| If the Traffic_Gremlin should spawn other Gremlins, this can get out of hand quick|
 
 ## Using Chaos Gremlin
@@ -88,7 +94,6 @@ There are a number of Gremlins available to use in Chaos Gremlin. You can enable
 |Cpu_Gremlin |Consumes CPU |
 |Black_Hole_Gremlin |Writes a random amount of data to /dev/null |
 |Die_Gremlin |Calls PHPs `die` function |
-|Service_Gremlin |Restarts a random service, will not work without sudo privileges |
 
 #### Traffic Gremlin
 The Traffic Gremlin will make requests to the URL set in the settings array. This can be used to test how your application handles a large number of requests. By default requests from the Traffic Gremlin will not spawn other Gremlins, this can be changed by setting the `traffic_gremlin_spawns_gremlins` setting to `true`. Again, be cautious with this setting as it can spawn a large number of Gremlins depending on your settings, including more Traffic Gremlins which could create additional Gremlins etc, etc.
@@ -136,8 +141,9 @@ The settings array will be passed to the custom Gremlin and the following method
 |getDiceRoll |Returns a random number between 1-6 | int |
 |probabilityCheck|Decides if a Gremlin should be released based on the probability setting | bool |
 |writeToLog|Writes a message to the log file | void |
+|getFork|Forks the process | int |
 
-To enable the custom Gremlin use the `enableCustomGremlin` method which takes a `string` key and an instance of the custom Gremlin.
+To enable the custom Gremlin use the `addGremlin` method which takes a `string` key and an instance of the custom Gremlin.
 
 ```php
 <?php
@@ -161,12 +167,12 @@ $Gremlin->settings([
 $Gremlin->enableGremlin('Memory_Gremlin');
 $Gremlin->enableGremlin('Disk_Gremlin');
 
-$Gremlin->enableCustomGremlin('Database_Gremlin', new Custom_Database_Gremlin());
+$Gremlin->addGremlin('Database_Gremlin', new Custom_Database_Gremlin());
 
 $Gremlin->release();
 ```
 
-To release the custom Gremlin you will need to call the `callGremlin` method using the key you set when enabling the Gremlin. This allows you to decide when to attempt to release a Gremlin allowing you to add Gremlins into specific parts of your application.
+To release the custom Gremlin you will need to call the `summonGremlin` method using the key you set when enabling the Gremlin. This allows you to decide when to attempt to release a Gremlin allowing you to add Gremlins into specific parts of your application.
 
 ```php
 <?php
@@ -177,5 +183,5 @@ use ChaosGremlin\Chaos_Gremlin;
 
 $Gremlin = Chaos_Gremlin::getInstance();
 
-$Gremlin->callGremlin('Database_Gremlin');
+$Gremlin->summonGremlin('Database_Gremlin');
 ```

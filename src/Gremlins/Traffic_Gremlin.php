@@ -11,7 +11,7 @@ class Traffic_Gremlin extends Gremlin {
 	 * @return void
 	 */
 	public function attack(): void {
-		$this->sendGremlins();
+		$this->trafficJam();
 		return;
 	}
 
@@ -20,9 +20,9 @@ class Traffic_Gremlin extends Gremlin {
 	 *
 	 * @return void
 	 */
-	protected function sendGremlins() {
+	protected function trafficJam() {
 		for ($i = 0; $i < $this->settings['traffic_requests']; $i++) {
-			$pid = pcntl_fork();
+			$pid = $this->getFork();
 			
 			if ($pid == -1) {
 				// Fork failed
@@ -43,15 +43,15 @@ class Traffic_Gremlin extends Gremlin {
 	/**
 	 * Send HTTP request
 	 *
-	 * @param string $url
+	 * @param string $url URL to send request to
 	 * @return void
 	 */
 	protected function sendHttpRequest(string $url) {
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
-		if ($this->settings['traffic_gremlin_spawns_gremlins'] === false) {
+		if ($this->settings['traffic_gremlin_spawns_gremlins'] === FALSE) {
 			curl_setopt($ch, CURLOPT_HTTPHEADER, ['CHAOS_GREMLIN_DISABLE: true']);
 		}
 

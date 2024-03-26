@@ -13,6 +13,6 @@ class Exception_Gremlin extends Gremlin {
 	 * @return void
 	 */
 	public function attack(): void {
-		throw new ExceptionGremlinException();
+		throw new ExceptionGremlinException($this->settings['exception_message']);
 	}
 }

@@ -36,13 +36,22 @@ abstract class Gremlin {
 	/**
 	 * Write to the log file
 	 *
-	 * @param string $message
+	 * @param string $message message to send to log
 	 * @return void
 	 */
 	protected function writeToLog(string $message): void {
-		$log_file = $this->settings['log_directory'] . '/chaos_gremlin.log';
+		$log_file    = $this->settings['log_directory'] . '/chaos_gremlin.log';
 		$log_message = date('Y-m-d H:i:s') . ' - ' . $message . PHP_EOL;
 		file_put_contents($log_file, $log_message, FILE_APPEND);
+	}
+
+	/**
+	 * Get a forked process
+	 *
+	 * @return int
+	 */
+	protected function getFork(): int {
+		return pcntl_fork();
 	}
 
 	/**

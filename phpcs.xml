@@ -55,4 +55,5 @@
     </properties>
 </rule> -->
 <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
+<exclude-pattern>src/test.php</exclude-pattern>
 </ruleset>

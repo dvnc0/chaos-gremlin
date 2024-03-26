@@ -13,7 +13,26 @@ class Cpu_Gremlin extends Gremlin {
 	 * @return void
 	 */
 	public function attack(): void {
-		exec("yes > /dev/null &");
-		$this->writeToLog('CPU Gremlin is attacking the system');
+		$this->cpuNoMore();
+		return;
+	}
+
+	/**
+	 * Consume CPU
+	 *
+	 * @return void
+	 */
+	protected function cpuNoMore(): void {
+		$pid = $this->getFork();
+		if ($pid === -1) {
+			die('Could not fork');
+		} elseif ($pid) {
+			$this->writeToLog('CPU Gremlin is attacking the system.');
+			return;
+		} else {
+			$this->writeToLog('CPU Gremlin is using PID: ' . getmypid() . ' to attack the system.');
+			exec("yes > /dev/null &");
+			exit;
+		}
 	}
 }
