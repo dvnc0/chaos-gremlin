@@ -106,7 +106,7 @@ class Chaos_Gremlin {
 	/**
 	 * Prevent from being constructed
 	 */
-	private function __construct() {
+	protected function __construct() {
 		$this->gremlins = [
 			'Latency_Gremlin' => Latency_Gremlin::class,
 			'Exception_Gremlin' => Exception_Gremlin::class,
@@ -143,6 +143,15 @@ class Chaos_Gremlin {
 		if (empty($this->settings['log_directory'])) {
 			throw new ChaosGremlinInstanceException('Log directory not set');
 		}
+	}
+
+	/**
+	 * Get the settings
+	 *
+	 * @return array
+	 */
+	public function getSettings(): array {
+		return $this->settings;
 	}
 
 	/**
@@ -212,7 +221,7 @@ class Chaos_Gremlin {
 
 		if ($this->shouldUseGremlin()) {
 			$gremlin                    = $this->enabled_gremlins[array_rand($this->enabled_gremlins)];
-			$Gremlin_Instance           = new $gremlin();
+			$Gremlin_Instance           = $this->createGremlinInstance($gremlin);
 			$Gremlin_Instance->settings = $this->settings;
 			$this->writeToLog('Released Gremlin: ' . $gremlin);
 			$Gremlin_Instance->attack();
@@ -280,5 +289,28 @@ class Chaos_Gremlin {
 		$log_file    = $this->settings['log_directory'] . '/chaos_gremlin.log';
 		$log_message = date('Y-m-d H:i:s') . ' - ' . $message . PHP_EOL;
 		$this->filePutContents($log_file, $log_message);
+	}
+
+	/**
+	 * Create an instance of the gremlin
+	 *
+	 * @param string $gremlin class name of the gremlin
+	 * @return Gremlin
+	 * 
+	 * @codeCoverageIgnore
+	 */
+	protected function createGremlinInstance(string $gremlin): Gremlin {
+		return new $gremlin();
+	}
+
+	/**
+	 * Reset the Chaos Gremlin
+	 *
+	 * @return void
+	 */
+	public function reset(): void {
+		$this->enabled_gremlins = [];
+		$this->custom_gremlins  = [];
+		static::$instance       = NULL;
 	}
 }

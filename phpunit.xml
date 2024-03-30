@@ -24,10 +24,11 @@
             <directory suffix=".php">src/</directory>
         </include>
         <exclude>
-            <directory suffix=".php">src/vendor</directory>
-        </exclude>
-        <exclude>
+            <directory suffix=".php">src/chaos_gremlin</directory>
+            <directory suffix=".php">src/chaos_gremlin_logs</directory>
             <directory suffix=".php">src/tests</directory>
+            <directory suffix=".php">src/vendor</directory>
+			<file>src/test.php</file>
         </exclude>
     </coverage>
 </phpunit>
