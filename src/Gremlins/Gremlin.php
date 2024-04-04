@@ -3,7 +3,12 @@ declare(strict_types=1);
 
 namespace ChaosGremlin\Gremlins;
 
+use ChaosGremlin\Traits\File_Helper_Trait;
+
 abstract class Gremlin {
+	
+	use File_Helper_Trait;
+
 	public array $settings = [];
 
 	/**
@@ -42,7 +47,7 @@ abstract class Gremlin {
 	protected function writeToLog(string $message): void {
 		$log_file    = $this->settings['log_directory'] . '/chaos_gremlin.log';
 		$log_message = date('Y-m-d H:i:s') . ' - ' . $message . PHP_EOL;
-		file_put_contents($log_file, $log_message, FILE_APPEND);
+		$this->filePutContents($log_file, $log_message, FILE_APPEND);
 	}
 
 	/**
